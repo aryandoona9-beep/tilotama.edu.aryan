@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tilottama Campus Yogikuti</title>
+<style>
+/* General */
+html {scroll-behavior: smooth;}
+body {margin:0;font-family:Arial,sans-serif;color:white;background:black;overflow-x:hidden;position:relative;}
+canvas {position:fixed;top:0;left:0;z-index:-1;}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background:rgba(0,0,0,0.7);position:sticky;top:0;z-index:10;}
+header h1{font-size:24px;}
+nav a{color:white;margin:0 10px;text-decoration:none;font-weight:bold;}
+nav a:hover{color:#00bfff;}
+
+/* Slider */
+.slider{position:relative;text-align:center;height:400px;overflow:hidden;}
+.slider img{width:100%;height:400px;object-fit:cover;transition:0.5s;}
+.hero-text{position:absolute;top:30%;width:100%;font-size:24px;text-shadow:2px 2px 5px black;animation: slideText 5s infinite alternate;}
+@keyframes slideText{0%{left:0;}50%{left:5%;}100%{left:0;}}
+
+/* Card sections */
+.card{background:rgba(0,0,0,0.7);padding:30px;margin:40px;border-radius:12px;opacity:0;transform:translateY(20px);transition:0.8s ease;}
+.card.show{opacity:1;transform:translateY(0);}
+
+/* Gallery hover */
+.gallery{display:flex;gap:15px;flex-wrap:wrap;}
+.gallery img{width:400px;border-radius:10px;transition:0.5s;cursor:pointer;}
+.gallery img:hover{transform:scale(1.05);box-shadow:0 0 20px #00bfff;}
+
+/* Forms hover animation */
+input,button,textarea{padding:10px;margin:5px 0;width:100%;border-radius:5px;border:none;transition:0.5s;}
+input:focus,textarea:focus{outline:none;box-shadow:0 0 10px #00bfff;}
+button:hover{background:#1e90ff;cursor:pointer;}
+
+/* Footer */
+footer{text-align:center;padding:20px;background:rgba(0,0,0,0.7);margin-top:20px;}
+section h2{margin-bottom:15px;}
+
+/* Fireworks canvas */
+#fireworks{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5;}
+</style>
+</head>
+<body>
+
+<!-- Fireworks canvas -->
+<canvas id="fireworks"></canvas>
+<canvas id="stars"></canvas>
+
+<header>
+<h1>Tilottama Campus Yogikuti</h1>
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#gallery">Gallery</a>
+<a href="#admission">Admission</a>
+<a href="#notice">Notice</a>
+<a href="#login">Login</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<!-- Slider -->
+<section class="slider" id="home">
+<img id="slide" src="https://tse1.mm.bing.net/th/id/OIP.uOPjyDiSGwfDY425hi6ceAHaL2?rs=1&pid=ImgDetMain&o=7&rm=3">
+<div class="hero-text">
+<h2>Welcome to Tilottama Campus</h2>
+<p>Quality Education • Professional Environment • Bright Future</p>
+</div>
+</section>
+
+<!-- About / History -->
+<section id="about" class="card">
+<h2>About Tilottama Campus</h2>
+<p>Tilottama Campus was established in 1996 as the first private college in Rupandehi by a team of dedicated, experienced, and enterprising academicians to meet the growing demands of parents and students in higher education.</p>
+<p>Since its establishment, it runs 10+2 programmes in Science and Management affiliated with NEB and BBA programmes affiliated with Pokhara University.</p>
+<p>The college is located in Butwal, Yogikuti, offering peaceful surroundings, modern labs, library, sports facilities, and classrooms under CCTV surveillance.</p>
+
+<h3>Vision</h3>
+<div id="visionSlide" style="overflow:hidden;white-space:nowrap;">
+<p style="display:inline-block;padding-right:50px;">To be an admired center of educational excellence nurturing globally-centric, socially sensitive professionals with ethical and moral attributes.</p>
+</div>
+
+<h3>Objectives</h3>
+<div id="objectiveSlide" style="overflow:hidden;white-space:nowrap;">
+<p style="display:inline-block;padding-right:50px;">Provide practical, value-based quality education, generate ethical behavior, offer disciplined & friendly atmosphere.</p>
+</div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery" class="card">
+<h2>Photo Gallery</h2>
+<div class="gallery">
+<img src="https://tse1.mm.bing.net/th/id/OIP.uOPjyDiSGwfDY425hi6ceAHaL2?rs=1&pid=ImgDetMain&o=7&rm=3">
+<img src="https://tse1.mm.bing.net/th/id/OIP.i5RRxFTU465td_uCgFwR8QHaEL?rs=1&pid=ImgDetMain&o=7&rm=3">
+</div>
+</section>
+
+<!-- Admission Form -->
+<section id="admission" class="card">
+<h2>Admission Form</h2>
+<form onsubmit="alert('Application submitted successfully!'); return false;">
+<input type="text" placeholder="Full Name" required>
+<input type="email" placeholder="Email" required>
+<input type="text" placeholder="Faculty" required>
+<textarea placeholder="Additional Info"></textarea>
+<button type="submit">Apply Now</button>
+</form>
+</section>
+
+<!-- Notice Board -->
+<section id="notice" class="card">
+<h2>Notice Board</h2>
+<input id="noticeInput" placeholder="Write notice here">
+<button onclick="addNotice()">Add Notice</button>
+<ul id="noticeList"></ul>
+</section>
+
+<!-- Login -->
+<section id="login" class="card">
+<h2>Student Login</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="loginMsg"></p>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="card">
+<h2>Contact Details</h2>
+<p>Tilottama - 2, Tilottama Municipality, Rupandehi, Nepal</p>
+<p>Email: info@tilottama.edu.np</p>
+<p>Website: <a href="https://tilottama.edu.np" style="color:#00bfff;">tilottama.edu.np</a></p>
+<p>Phone: +977-71-437659, +977-71-438559</p>
+</section>
+
+<footer>© 2026 Tilottama Campus Yogikuti | Made by Aryan</footer>
+
+<script>
+// Galaxy background
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+let stars=[];
+for(let i=0;i<200;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});}
+function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle="white";stars.forEach(s=>{ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();s.y+=0.5;if(s.y>canvas.height)s.y=0;});requestAnimationFrame(drawStars);}
+drawStars();
+
+// Slider
+const slides=[
+"https://tse1.mm.bing.net/th/id/OIP.uOPjyDiSGwfDY425hi6ceAHaL2?rs=1&pid=ImgDetMain&o=7&rm=3",
+"https://tse1.mm.bing.net/th/id/OIP.i5RRxFTU465td_uCgFwR8QHaEL?rs=1&pid=ImgDetMain&o=7&rm=3"
+];
+let index=0;setInterval(()=>{index=(index+1)%slides.length;document.getElementById("slide").src=slides[index];},3000);
+
+// Reveal card on scroll
+const cards=document.querySelectorAll('.card');
+window.addEventListener('scroll',()=>{cards.forEach(c=>{if(c.getBoundingClientRect().top<window.innerHeight-100){c.classList.add('show');}});});
+
+// Notice
+function addNotice(){let text=document.getElementById("noticeInput").value;if(!text)return;let li=document.createElement("li");li.textContent=text;document.getElementById("noticeList").appendChild(li);document.getElementById("noticeInput").value="";}
+
+// Login
+function login(){let u=document.getElementById("user").value;let p=document.getElementById("pass").value;if(u==="Aryan"&&p==="123"){document.getElementById("loginMsg").innerText="Login Successful! Welcome Aryan.";document.getElementById("loginMsg").style.color="lightgreen";}else{document.getElementById("loginMsg").innerText="Wrong credentials!";document.getElementById("loginMsg").style.color="red";}}
+
+// Sliding Vision & Objectives
+function slideText(id){const el=document.getElementById(id);let x=0;setInterval(()=>{x-=1;if(Math.abs(x) > el.scrollWidth/2)x=0;el.scrollLeft=-x;},50);}
+slideText('visionSlide');slideText('objectiveSlide');
+
+// Fireworks animation
+const fireCanvas=document.getElementById('fireworks');const fCtx=fireCanvas.getContext('2d');fireCanvas.width=window.innerWidth;fireCanvas.height=window.innerHeight;let particles=[];
+function createFirework(){for(let i=0;i<50;i++){particles.push({x:Math.random()*window.innerWidth,y:window.innerHeight,dx:(Math.random()-0.5)*5,dy:-Math.random()*10-2,life:100,color:`hsl(${Math.random()*360},100%,50%)`});}}
+function animateFireworks(){fCtx.clearRect(0,0,fireCanvas.width,fireCanvas.height);particles.forEach((p,i)=>{fCtx.fillStyle=p.color;fCtx.beginPath();fCtx.arc(p.x,p.y,2,0,Math.PI*2);fCtx.fill();p.x+=p.dx;p.y+=p.dy;p.dy+=0.2;p.life--;if(p.life<=0)particles.splice(i,1);});requestAnimationFrame(animateFireworks);}
+setInterval(createFirework,2000);animateFireworks();
+</script>
+
+</body>
+</html>
